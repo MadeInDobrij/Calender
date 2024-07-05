@@ -1,0 +1,166 @@
+﻿<Window x:Class="Calender.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:fa="http://schemas.fontawesome.io/icons/"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:us="clr-namespace:Calender.UserControls"
+        FontFamily="Trebuchet MS" mc:Ignorable="d" WindowStartupLocation="CenterScreen" WindowStyle="None" 
+        AllowsTransparency="True" Background="Transparent" Height="590" Width="900">
+
+    
+    <Grid>
+        <!--Grid Background-->
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1.2*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Border CornerRadius="20 0 0 20" Background="#FEFEFE"/>
+
+            <Border CornerRadius="0 20 20 0" MouseDown="Border_MouseDown" Grid.Column="1" Background="#d9d60b"/>
+            <Button Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 10 10 0" 
+                        Width="30" Height="30" Style="{StaticResource button}" Click="CloseButton_Click">
+                <fa:ImageAwesome Icon="TimesCircle" Width="16" Height="16" Foreground="#f1f1f1"/>
+            </Button>
+        </Grid>
+
+        <!--Grid Controls-->
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1.2*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel>
+                <!--Year Selection-->
+                <StackPanel x:Name="YearSelectionPanel" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 50 0 30"/>
+                <!--Month Selection-->
+                <StackPanel x:Name="MonthButtons" Orientation="Horizontal" HorizontalAlignment="Center">
+                    <!-- Month Buttons (statically defined here) -->
+                    <Button x:Name="btnJanuary" Content="1" Style="{StaticResource buttonMonth}" Click="MonthButton_Click"/>
+                    <Button x:Name="btnFebruary" Content="2" Style="{StaticResource buttonMonth}" Click="MonthButton_Click"/>
+                    <Button x:Name="btnMarch" Content="3" Style="{StaticResource buttonMonth}" Click="MonthButton_Click"/>
+                    <Button x:Name="btnApril" Content="4" Style="{StaticResource buttonMonth}" Click="MonthButton_Click"/>
+                    <Button x:Name="btnMay" Content="5" Style="{StaticResource buttonMonth}" Click="MonthButton_Click"/>
+                    <Button x:Name="btnJune" Content="6" Style="{StaticResource buttonMonth}" Click="MonthButton_Click"/>
+                    <Button x:Name="btnJuly" Content="7" Style="{StaticResource buttonMonth}" Click="MonthButton_Click"/>
+                    <Button x:Name="btnAugust" Content="8" Style="{StaticResource buttonMonth}" Click="MonthButton_Click"/>
+                    <Button x:Name="btnSeptember" Content="9" Style="{StaticResource buttonMonth}" Click="MonthButton_Click"/>
+                    <Button x:Name="btnOctober" Content="10" Style="{StaticResource buttonMonth}" Click="MonthButton_Click"/>
+                    <Button x:Name="btnNovember" Content="11" Style="{StaticResource buttonMonth}" Click="MonthButton_Click"/>
+                    <Button x:Name="btnDecember" Content="12" Style="{StaticResource buttonMonth}" Click="MonthButton_Click"/>
+                </StackPanel>
+
+                <Separator Height="0.8" Background="#3ea85a" Margin="30 10"/>
+
+                <TextBlock x:Name="MonthText" Text="November" Foreground="#3ea85a" FontSize="24" TextAlignment="Center" FontWeight="SemiBold" Margin="0 15 0 20"/>
+                <Calendar x:Name="MainCalendar" CalendarItemStyle="{DynamicResource CalendarCalendarItemStyle1}" CalendarDayButtonStyle="{DynamicResource CalendarCalendarDayButtonStyle1}" Style="{DynamicResource CalendarStyle1}" SelectedDatesChanged="MainCalendar_SelectedDatesChanged"/>
+            </StackPanel>
+
+            <StackPanel Grid.Column="1">
+                <!--Titles-->
+                <StackPanel Margin="30 45 30 10" Orientation="Horizontal">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Button Style="{StaticResource buttonBig}" Grid.Column="0" Foreground="#3ea85a" Click="PreviousDay_Click">
+                            <fa:ImageAwesome Icon="AngleLeft" Style="{StaticResource angleBig}"/>
+                        </Button>
+
+                        <TextBlock x:Name="DayText" Grid.Column="1" Text="16" FontSize="50" Foreground="#3ea85a" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+
+                        <Button Style="{StaticResource buttonBig}" Grid.Column="2" Foreground="#3ea85a" Click="NextDay_Click">
+                            <fa:ImageAwesome Icon="AngleRight" Style="{StaticResource angleBig}"/>
+                        </Button>
+                    </Grid>
+
+                    <StackPanel Grid.Column="1" Margin="10 0 0 0" VerticalAlignment="Center">
+                        <TextBlock x:Name="MonthDayText" Text="November" Foreground="#3ea85a" FontSize="24"/>
+                        <TextBlock x:Name="WeekDayText" Text="Monday" Foreground="#3ea85a" FontSize="14"/>
+                    </StackPanel>
+                </StackPanel>
+                <TextBlock x:Name="TaskSummaryText" Foreground="#3e5ea8" FontSize="16" Margin="35 0 20 0" Text="{Binding TaskSummary}" />
+                <!--Add Notes-->
+                <Border Background="#3e5ea8" CornerRadius="10" HorizontalAlignment="Center" Width="355" Margin="0 30 0 20" Padding="17 15 5 15">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+
+                                <fa:ImageAwesome Icon="Pencil" Width="15" Height="15" Foreground="#FFFFFF"/>
+                                <TextBlock x:Name="lblNote" MouseDown="lblNote_MouseDown" Foreground="#3ea85a" Text="Add Note" Style="{StaticResource textHint}" TextWrapping="Wrap"/>
+                                <TextBox Name="txtNote" TextChanged="txtNote_TextChanged" Style="{StaticResource textBox}" Foreground="#3ea85a"  Background="#3e5ea8" Visibility="Collapsed" TextWrapping="Wrap"/>
+                            </Grid>
+
+                            <Separator Margin="0 12 0 11" Background="#3ea85a" Height="0.8"/>
+
+                        </StackPanel>
+                        <Button x:Name="AddNoteButton" Style="{StaticResource button}" Grid.Column="1" Click="AddNote_Click">
+                            <fa:ImageAwesome Icon="PlusCircle" Width="28" Height="28" Foreground="#f9f9f9" />
+                        </Button>
+                    </Grid>
+                </Border>
+
+                <!--Notes-->
+                <Grid>
+                    <Border x:Name="AppBorder" BorderThickness="1" BorderBrush="#3ea85a">
+                        <StackPanel x:Name="NotesStackPanel" Background="#3ea85a">
+                            <ListBox x:Name="SelectedDateTasksListBox" ItemsSource="{Binding Tasks}" Background="Transparent" 
+         ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+         MaxWidth="400" MaxHeight="300">
+                                <ListBox.Template>
+                                    <ControlTemplate TargetType="ListBox">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+                                            <ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                                                <ItemsPresenter />
+                                            </ScrollViewer>
+                                        </Grid>
+                                    </ControlTemplate>
+                                </ListBox.Template>
+                                <ListBox.ItemContainerStyle>
+                                    <Style TargetType="ListBoxItem">
+                                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                    </Style>
+                                </ListBox.ItemContainerStyle>
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+                                            <Button Grid.Column="1" x:Name="DeleteNoteButton" Style="{StaticResource button}" Click="DeleteNote_Click">
+                                                <fa:ImageAwesome Icon="Trash" Width="16" Height="16" Foreground="#f1f1f1"/>
+                                            </Button>
+                                            <TextBlock Text="{Binding Title}" TextWrapping="Wrap" Foreground="#243269" FontSize="16"/>
+                                            <!-- Assuming Title is the property you want to wrap -->
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </StackPanel>
+        </Grid>
+    </Grid>
+    </Window>
